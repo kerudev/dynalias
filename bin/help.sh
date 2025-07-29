@@ -1,24 +1,24 @@
-#!/bin/bash
-
 # help.sh - Displays the help message of dynalias.
 
 cat << EOF
-Usage: dynalias OPTION [...ARGS]
-
 Description: 
-    Manages dynamic aliases to simplify shell commands.
+  Manages dynamic aliases to simplify shell commands.
+
+Usage:
+  dynalias OPTION [...ARGS]
 
 Options:
-    -h, --help          Displays this help message.
+  -h, --help                Displays this help message.
 
-    -i, --init          Initializes the 'dynalias' directory structure.
+  -i, --init                Initializes the 'dynalias' directory structure.
 
-    -l, --list          Shows the lines of the 'output' file.
+  -l, --list                Shows the lines of the 'output' file.
 
-    -s, --set  [type]   If a type is passed, creates a new alias and updates the 'output' file.
-                        If not, just updates the 'output' file.
+  -s, --set  [type] [name]  If a type is passed, creates a new alias and
+                            updates the 'output' file.
+                            If not, just updates the 'output' file.
 
-    -r, --read [name]   Reads the contents of an alias and displays it.
+  -r, --read [name]         Reads the contents of an alias and displays it.
 
-    -o, --open [name]   Opens the alias file in a text editor.
+  -o, --open [name]         Opens the alias file in a text editor.
 EOF
