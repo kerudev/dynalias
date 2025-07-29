@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ -z "$1" ]]; then
-    echo "You must provide a flag to use"
+if [ -z "$1" ]; then
+    echo "Please provide a flag."
     echo "Try 'dynalias --help' for more information."
     exit 1
 fi
     
-if [[ ! -d "$HOME/dynalias" ]]; then
+if [ ! -d "$HOME/dynalias" ]; then
     echo "The 'dynalias' folder is not created. Use 'dynalias --init' to create it."
     echo "Try 'dynalias --help' for more information."
     exit 1
 fi
 
-if [[ "$1" == "-i" || "$1" == "--init" ]]; then
-    source "$DYNALIAS_ROOT/bin/init.sh"
+if [ "$1" = "-i" ] || [ "$1" = "--init" ]; then
+    . "$DYNALIAS_ROOT/bin/init.sh"
     exit 0
 fi
 
@@ -25,40 +25,33 @@ export DYNALIAS_OUTPUT="$DYNALIAS_HOME/output"
 export DYNALIAS_BIN="$DYNALIAS_ROOT/bin"
 export DYNALIAS_LIB="$DYNALIAS_ROOT/lib"
 
-source "$DYNALIAS_LIB/error.sh"
+. "$DYNALIAS_LIB/error.sh"
 
 case "$1" in
     -h|--help)
-        source "$DYNALIAS_BIN/help.sh"
+        . "$DYNALIAS_BIN/help.sh"
         ;;
+
     -l|--list)
-        source "$DYNALIAS_BIN/list.sh"
+        . "$DYNALIAS_BIN/list.sh"
         ;;
+
     -s|--set)
-        args=("")
-        [[ $# -ne 1 ]] && args=("${@:2}")
-
-        source "$DYNALIAS_BIN/set.sh" "${args[@]}"
+        shift
+        . "$DYNALIAS_BIN/set.sh"
         ;;
+
     -r|--read)
-        args=("${@:2}")
-
-        if [[ -z "${args[*]}" ]]; then
-            err 1 "should pass an alias name to read from"
-        fi
-
-        source "$DYNALIAS_BIN/read.sh" "${args[@]}"
+        shift
+        . "$DYNALIAS_BIN/read.sh"
         ;;
+
     -o|--open)
-        args=("${@:2}")
-
-        if [[ -z "${args[*]}" ]]; then
-            err 1 "should pass a name to open"
-        fi
-
-        source "$DYNALIAS_BIN/open.sh" "${args[@]}"
+        shift
+        . "$DYNALIAS_BIN/open.sh"
         ;;
+
     *)
-        err 1 "unknown command $1, use -h or --help"
+        throw "unknown command $1, use -h or --help"
         ;;
 esac
