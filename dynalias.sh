@@ -6,9 +6,7 @@ export DYNALIAS_BIN="$DYNALIAS_ROOT/bin"
 export DYNALIAS_LIB="$DYNALIAS_ROOT/lib"
 
 export DYNALIAS_CONF="$HOME/.config/dynalias"
-export DYNALIAS_TEXT="$DYNALIAS_CONF/text"
-export DYNALIAS_FUNC="$DYNALIAS_CONF/func"
-export DYNALIAS_OUT="$DYNALIAS_CONF/output"
+export DYNALIAS_OUT="$DYNALIAS_CONF/.output"
 
 # global imports
 . "$DYNALIAS_LIB/error.sh"
@@ -27,10 +25,8 @@ if [ ! -d "$DYNALIAS_ROOT" ]; then
 fi
 
 if [ ! -d "$DYNALIAS_CONF" ]; then
-    err "The 'dynalias' folder doesn't exist on '\$HOME/.config'."
-    err "Use 'dynalias init' to create it."
-    err "Try 'dynalias help' for more information."
-    exit 1
+    warn "Crating 'dynalias' inside '\$HOME/.config'."
+    mkdir -p "$DYNALIAS_CONF"
 fi
 
 # save the passed command and shift arguments
