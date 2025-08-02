@@ -6,20 +6,14 @@
 #   $2 - File to be processed
 # Returns: Formatted alias command
 format_alias() {
-    type=$1
-    file=$2
-
-    if [ "$type" = "text" ]; then
-        code=$(cat "$file")
-    elif [ "$type" = "func" ]; then
-        code="$file"
-    else
-        throw "unknown type $type; can't create aliases from this folder"
+    if [ "$1" != "text" ] && [ "$1" != "func" ]; then
+        throw "unknown type '$1'; can't create aliases from this folder"
     fi
 
-    name="${file#*/"${type}"/}"
+    # obtains the alias name from the given path
+    name="${2#*/"${1}"/}"
 
-    echo "alias $name='$code'"
+    echo "alias $name='. $2'"
 }
 
 # Description: Reads the contents of an existing alias.
@@ -27,19 +21,17 @@ format_alias() {
 #   $1 - Name of the alias
 # Returns: The alias' content or error message.
 get_alias_content() {
-    expr="alias $1="
-    line=$(grep "$expr" "$DYNALIAS_OUTPUT")
+    name="alias $1="
+    line=$(grep "$name" "$DYNALIAS_OUT")
 
-    if [ -z "$line" ]; then
-        throw "unknown alias name"
-    fi
+    # check if the alias name is known
+    [ -z "$line" ] && throw "unknown alias name '$1'"
 
-    content="${line#"$expr'"}"
+    content="${line#"$name'"}"
     content="${content%\'*}"
 
-    if [ -z "$content" ]; then
-        throw "alias exists but has no content"
-    fi
+    # check if the alias has content
+    [ -z "$content" ] && throw "alias exists but has no content"
 
     echo "$content"
 }
