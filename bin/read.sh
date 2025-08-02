@@ -6,9 +6,10 @@
 # checks if the alias name was provided
 [ -z "$1" ] && throw "should pass an alias name to read from"
 
-. "$DYNALIAS_LIB/alias.sh"
+file="$DYNALIAS_CONF/$1"
 
-content=$(get_alias_content "$1")
+# check if the file exists
+[ ! -f "$file" ] && throw "alias '$1' doesn't exist"
 
-# if the alias is a file (func), cat the file
-[ -f "$content" ] && { cat "$content"; echo; } || echo "$content"
+# cat the file and print a newline if the file doesn't end with one
+cat "$file" && [ -n "$(tail -c1 "$file")" ] && echo

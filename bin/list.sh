@@ -1,4 +1,4 @@
-# list.sh - Echoes the contents of the 'output' file.
+# list.sh - Echoes the contents of the '.output' file.
 
 content=$(cat "$DYNALIAS_OUT")
 
