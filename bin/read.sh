@@ -1,17 +1,14 @@
-# read.sh - Echoes the contents of the alias file
+# read.sh - Echoes the contents of the alias file.
+#
 # Parameters:
 #   $1 - Name of the alias
 
-if [ -z "$1" ]; then
-    throw "should pass an alias name to read from"
-fi
+# checks if the alias name was provided
+[ -z "$1" ] && throw "should pass an alias name to read from"
 
 . "$DYNALIAS_LIB/alias.sh"
 
 content=$(get_alias_content "$1")
 
-if [ -f "$content" ]; then
-    cat "$content"; echo
-else
-    echo "$content"
-fi
+# if the alias is a file (func), cat the file
+[ -f "$content" ] && { cat "$content"; echo; } || echo "$content"

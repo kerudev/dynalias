@@ -3,14 +3,24 @@ YELLOW='\033[33m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
+log() {
+    case "$1" in
+        info) color=$BLUE ;;
+        warn) color=$YELLOW ;;
+        error) color=$RED ;;
+    esac
+
+    printf "$color%s:$RESET %s\n" "$1" "$2"
+}
+
 info() {
-    printf "${BLUE}info:${RESET} %s\n" "$1"
+    log "info" "$1"
 }
 
 warn() {
-    printf "${YELLOW}warn:${RESET} %s\n" "$1"
+    log "warn" "$1"
 }
 
 err() {
-    printf "${RED}error:${RESET} %s\n" "$1"
+    log "error" "$1"
 }

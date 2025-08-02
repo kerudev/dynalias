@@ -1,14 +1,12 @@
-# init.sh - Creates the basic structure where dynalias will look for the aliases and output files.
-
-DYNALIAS="$HOME/dynalias"
+# init.sh - Creates the folder structure where dynalias will look for the
+# aliases and the output file.
 
 if [ ! -d "$DYNALIAS" ]; then
-    mkdir -p "$DYNALIAS/alias/text" "$DYNALIAS/alias/func"
-    touch "$DYNALIAS/output"
+    mkdir -p "$DYNALIAS_TEXT" "$DYNALIAS_FUNC"
+    touch "$DYNALIAS_OUT"
 fi
 
-line="[ -f \"$DYNALIAS/output\" ] && . \"$DYNALIAS/output\""
+line="[ -f \"$DYNALIAS_OUT\" ] && . \"$DYNALIAS_OUT\""
 
-if [ ! -f ~/.bash_aliases ] || ! grep -qF "$line" ~/.bash_aliases; then
-    echo "$line" >> ~/.bash_aliases
-fi
+# add line in .bash_aliases if not present or file doesn't exist
+! grep -sqF "$line" ~/.bash_aliases && echo "$line" >> ~/.bash_aliases

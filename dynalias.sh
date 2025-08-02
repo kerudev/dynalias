@@ -1,57 +1,44 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-if [ -z "$1" ]; then
-    echo "Please provide a flag."
-    echo "Try 'dynalias --help' for more information."
-    exit 1
-fi
-    
-if [ ! -d "$HOME/dynalias" ]; then
-    echo "The 'dynalias' folder is not created. Use 'dynalias --init' to create it."
-    echo "Try 'dynalias --help' for more information."
-    exit 1
-fi
-
-if [ "$1" = "-i" ] || [ "$1" = "--init" ]; then
-    . "$DYNALIAS_ROOT/bin/init.sh"
-    exit 0
-fi
-
-export DYNALIAS_HOME="$HOME/dynalias"
-
-export DYNALIAS_ALIAS="$DYNALIAS_HOME/alias"
-export DYNALIAS_OUTPUT="$DYNALIAS_HOME/output"
-
+# global exports
+export DYNALIAS_ROOT="$HOME/.dynalias"
 export DYNALIAS_BIN="$DYNALIAS_ROOT/bin"
 export DYNALIAS_LIB="$DYNALIAS_ROOT/lib"
 
+export DYNALIAS_CONF="$HOME/.config/dynalias"
+export DYNALIAS_TEXT="$DYNALIAS_CONF/text"
+export DYNALIAS_FUNC="$DYNALIAS_CONF/func"
+export DYNALIAS_OUT="$DYNALIAS_CONF/output"
+
+# global imports
 . "$DYNALIAS_LIB/error.sh"
+. "$DYNALIAS_LIB/log.sh"
 
-case "$1" in
-    -h|--help)
-        . "$DYNALIAS_BIN/help.sh"
-        ;;
+if [ -z "$1" ]; then
+    err "Please provide a flag."
+    err "Try 'dynalias help' for more information."
+    exit 1
+fi
 
-    -l|--list)
-        . "$DYNALIAS_BIN/list.sh"
-        ;;
+if [ ! -d "$DYNALIAS_ROOT" ]; then
+    err "The '.dynalias' folder doesn't exist on '\$HOME'."
+    err "Please make sure to install the project correctly"
+    exit 1
+fi
 
-    -s|--set)
-        shift
-        . "$DYNALIAS_BIN/set.sh"
-        ;;
+if [ ! -d "$DYNALIAS_CONF" ]; then
+    err "The 'dynalias' folder doesn't exist on '\$HOME/.config'."
+    err "Use 'dynalias init' to create it."
+    err "Try 'dynalias help' for more information."
+    exit 1
+fi
 
-    -r|--read)
-        shift
-        . "$DYNALIAS_BIN/read.sh"
-        ;;
+# save the passed command and shift arguments
+command=$1
+shift
 
-    -o|--open)
-        shift
-        . "$DYNALIAS_BIN/open.sh"
-        ;;
+# check if command exists
+[ ! -f "$DYNALIAS_BIN/$command.sh" ] \
+  && throw "unknown command '$command', use 'dynalias help'"
 
-    *)
-        throw "unknown command $1, use -h or --help"
-        ;;
-esac
+. "$DYNALIAS_BIN/$command.sh"
