@@ -4,7 +4,7 @@
 #   $1 - Name of the alias
 
 # checks if the alias name was provided
-[ -z "$1" ] && throw "should pass an alias name to read from"
+[ -z "$1" ] && throw "please provide an alias name to read"
 
 file="$DYNALIAS_CONF/$1"
 
@@ -13,3 +13,6 @@ file="$DYNALIAS_CONF/$1"
 
 # cat the file and print a newline if the file doesn't end with one
 cat "$file" && [ -n "$(tail -c1 "$file")" ] && echo
+
+# prevents returning 1 when the previous line is not true
+return 0
