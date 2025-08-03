@@ -11,6 +11,7 @@ log() {
     esac
 
     printf "$color%s:$RESET %s\n" "$1" "$2"
+    echo "$(date "+[%d/%m/%Y %T]") $1: $2" >> "$DYNALIAS_LOG"
 }
 
 info() {
