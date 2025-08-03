@@ -1,5 +1,4 @@
-# set.sh - Reads the '~/.config/dynalias' directory and formats its content
-# into lines for the 'output' file.
+# set.sh - Creates a new alias given a certain name.
 #
 # Parameters:
 #   $1 - Name of the alias
