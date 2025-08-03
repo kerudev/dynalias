@@ -1,4 +1,4 @@
-# refresh.sh - Updates the 'output' file.
+# refresh.sh - Formats '~/.config/dynalias' into lines for the 'output' file.
 
 # empties or creates the output file
 true > "$DYNALIAS_OUT"
