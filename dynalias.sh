@@ -4,6 +4,7 @@
 export DYNALIAS_ROOT="$HOME/.dynalias"
 export DYNALIAS_BIN="$DYNALIAS_ROOT/bin"
 export DYNALIAS_LIB="$DYNALIAS_ROOT/lib"
+export DYNALIAS_LOG="$DYNALIAS_ROOT/dynalias.log"
 
 export DYNALIAS_CONF="$HOME/.config/dynalias"
 export DYNALIAS_OUT="$DYNALIAS_CONF/.output"
