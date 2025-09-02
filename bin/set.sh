@@ -16,6 +16,11 @@ $EDITOR "$alias_path" \
 || vi "$alias_path" \
 || throw "it was not possible to open a text editor"
 
+if [ ! -f "$alias_path" ]; then
+    info "'$1' wasn't created"
+    return 0
+fi
+
 info "'$1' created successfully"
 
 . "$DYNALIAS_BIN/refresh.sh"
