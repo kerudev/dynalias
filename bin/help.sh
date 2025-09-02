@@ -13,6 +13,7 @@ Commands:
   open <name>   Opens the alias file in a text editor.
   read <name>   Reads the contents of an alias and displays it.
   rm   <name>   Removes an alias.
+  path <name>   Returns the path of the alias.
   list          Shows the lines of the '.output' file.
   refresh       Updates the '.output' file.
 EOF
